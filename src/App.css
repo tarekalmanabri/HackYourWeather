@@ -58,3 +58,11 @@
 .weather-status p {
   margin-top: 0;
 }
+.btn {
+  padding: 10px;
+  margin-left: 10px;
+}
+.search-bar {
+  width: 200px;
+  padding: 10px;
+}
