@@ -36,7 +36,7 @@ function SearchForm({ setWeather }) {
   const [name, setName] = useState("");
   const getWeather = () => {
     return fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${API_Key}&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${API_Key}&units=metric`
     )
       .then((res) => res.json())
       .then((data) => {
