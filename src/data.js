@@ -1,38 +1,44 @@
 import { useState } from "react";
-
-const API_Key = "7471b32bdb071a4265631474c52f1765";
-export default function City() {
-  const [weather, setWeather] = useState();
+const API_Key = process.env.REACT_APP_API_KEY;
+export default function City({ index, name }) {
+  const [weather, setWeather] = useState([]);
+  const removeCity = (index) => {
+    const newCity = [...weather];
+    newCity.splice(index, 1);
+    setWeather(newCity);
+  };
 
   return (
     <div>
-      <SearchForm setWeather={setWeather} />
+      <SearchForm setWeather={setWeather} weather={weather} />
 
-      {weather && (
-        <div>
-          <h1>
-            {weather.name}, {weather.sys.country}
-          </h1>
+      {weather &&
+        weather.map((item) => (
+          <div className="city">
+            <button onClick={() => removeCity(index)}>x</button>
+            <h1>
+              {item.name}, {item.sys.country}
+            </h1>
 
-          <div className="props-status">
-            <h2>{weather.weather[0].main}</h2>
-            <p>{weather.weather[0].description}</p>
-            <hr />
-            <p>
-              Min temp: {weather.main.temp_min}
-              <br />
-              Max temp: {weather.main.temp_max}
-              <br />
-              Location: {weather.coord.lat}, {weather.coord.lon}
-            </p>
+            <div className="weather-status">
+              <h2>{item.weather[0].main}</h2>
+              <p>{item.weather[0].description}</p>
+              <hr />
+              <p>
+                Min temp: {item.main.temp_min}
+                <br />
+                Max temp: {item.main.temp_max}
+                <br />
+                Location: {item.coord.lat}, {item.coord.lon}
+              </p>
+            </div>
           </div>
-        </div>
-      )}
+        ))}
     </div>
   );
 }
 
-function SearchForm({ setWeather }) {
+function SearchForm({ setWeather, weather }) {
   const [name, setName] = useState("");
   const getWeather = () => {
     return fetch(
@@ -40,7 +46,7 @@ function SearchForm({ setWeather }) {
     )
       .then((res) => res.json())
       .then((data) => {
-        setWeather(data);
+        setWeather([...weather, data]);
       })
       .catch((err) => console.log(err));
   };
@@ -48,6 +54,7 @@ function SearchForm({ setWeather }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     getWeather();
+    setName("");
   };
 
   return (
@@ -57,7 +64,12 @@ function SearchForm({ setWeather }) {
       }}
     >
       <Search setName={setName} />
-      <input type="submit" className="btn" value="Get Weather" />
+      <input
+        type="submit"
+        disabled={name === ""}
+        className="btn"
+        value="Get Weather"
+      />
     </form>
   );
 }
