@@ -1,11 +1,55 @@
-.App {
+html,
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
   font-family: "Nanum Gothic", sans-serif;
-  margin: auto;
+}
+
+header {
+  background-color: lightskyblue;
+}
+
+nav {
   width: 98%;
-  max-width: 400px;
+  max-width: 800px;
+  margin: auto;
+}
+
+nav ul {
+  display: flex;
+  padding: 0.5em;
+  margin: 0;
+  list-style: none;
+}
+
+nav ul a {
+  display: block;
+  padding: 1em 0.5em;
+  text-decoration: none;
+  color: inherit;
+  background-color: ivory;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-inner {
+  margin: auto;
+}
+
+.home a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .city {
+  position: relative;
   border-radius: 10px;
   border: 1px solid black;
   margin: 10px auto;
@@ -13,7 +57,10 @@
 }
 
 .city button {
-  padding: 10px;
+  position: absolute;
+  right: 30px;
+  height: 3em;
+  width: 3em;
   background-color: transparent;
   border-radius: 100%;
 }
